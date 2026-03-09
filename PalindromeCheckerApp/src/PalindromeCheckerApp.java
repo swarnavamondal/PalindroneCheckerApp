@@ -1,38 +1,48 @@
+import java.util.Scanner;
+
 /**
  * ======================================================
- * MAIN CLASS – UseCase2PalindromeCheckerApp
+ * MAIN CLASS – UseCase3PalindromeCheckerApp
  * ======================================================
  *
- * Use Case 2: Hardcoded Palindrome Validation
+ * Use Case 3: Palindrome Validation by Reversing String
  *
  * Description:
- * This class demonstrates basic palindrome validation
- * using a hardcoded string value.
+ * This program checks whether a given string is a palindrome
+ * by reversing the string using a loop and comparing it with
+ * the original string.
  */
-import java.util.Scanner;
+
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
-        // Hardcoded string
+        // Take input from the user
         System.out.print("Enter text: ");
         String input = scanner.nextLine();
 
-        boolean isPalindrome = true;
+        String reversed = "";
 
-        // Loop only till half of the string length
-        for (int i = 0; i < input.length() / 2; i++) {
-
-            // Compare characters from both ends
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
+        // Reverse the string using a loop
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reversed = reversed + input.charAt(i);
         }
 
-        // Display output in required format
+        boolean isPalindrome;
+
+        // Compare original and reversed strings
+        if (input.equals(reversed)) {
+            isPalindrome = true;
+        } else {
+            isPalindrome = false;
+        }
+
+        // Display result
         System.out.println("Input text: " + input);
         System.out.println("Is it a Palindrome? : " + isPalindrome);
+
+        scanner.close();
     }
 }
