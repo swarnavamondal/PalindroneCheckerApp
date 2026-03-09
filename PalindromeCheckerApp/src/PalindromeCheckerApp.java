@@ -1,54 +1,38 @@
+/**
+ * ======================================================
+ * MAIN CLASS – UseCase2PalindromeCheckerApp
+ * ======================================================
+ *
+ * Use Case 2: Hardcoded Palindrome Validation
+ *
+ * Description:
+ * This class demonstrates basic palindrome validation
+ * using a hardcoded string value.
+ */
 import java.util.Scanner;
-
 public class PalindromeCheckerApp {
 
-    // Method 1: Basic palindrome check
-    public static boolean isPalindromeBasic(String str) {
-        String reversed = new StringBuilder(str).reverse().toString();
-        return str.equals(reversed);
-    }
-
-    // Method 2: Ignore case
-    public static boolean isPalindromeIgnoreCase(String str) {
-        String reversed = new StringBuilder(str).reverse().toString();
-        return str.equalsIgnoreCase(reversed);
-    }
-
-    // Method 3: Ignore spaces and punctuation
-    public static boolean isPalindromeIgnoreSpecial(String str) {
-        String cleaned = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        String reversed = new StringBuilder(cleaned).reverse().toString();
-        return cleaned.equals(reversed);
-    }
-
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Palindrome Checker App ===");
-        System.out.print("Enter a string: ");
+        // Hardcoded string
+        System.out.print("Enter text: ");
         String input = scanner.nextLine();
 
-        System.out.println("\nResults:");
+        boolean isPalindrome = true;
 
-        if (isPalindromeBasic(input)) {
-            System.out.println("Basic Check: The string IS a palindrome.");
-        } else {
-            System.out.println("Basic Check: The string is NOT a palindrome.");
+        // Loop only till half of the string length
+        for (int i = 0; i < input.length() / 2; i++) {
+
+            // Compare characters from both ends
+            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        if (isPalindromeIgnoreCase(input)) {
-            System.out.println("Ignore Case Check: The string IS a palindrome.");
-        } else {
-            System.out.println("Ignore Case Check: The string is NOT a palindrome.");
-        }
-
-        if (isPalindromeIgnoreSpecial(input)) {
-            System.out.println("Ignore Special Characters Check: The string IS a palindrome.");
-        } else {
-            System.out.println("Ignore Special Characters Check: The string is NOT a palindrome.");
-        }
-
-        scanner.close();
+        // Display output in required format
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 }
