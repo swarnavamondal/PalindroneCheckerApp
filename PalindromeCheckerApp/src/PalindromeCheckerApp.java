@@ -1,39 +1,32 @@
-public class RecursivePalindrome {
+public class NormalizedPalindrome {
 
-    // Helper variable to track left side
-    static int left = 0;
+    // Function to check palindrome
+    public static boolean isPalindrome(String input) {
 
-    public static boolean isPalindrome(String str, int right) {
+        // Step 1: Normalize string
+        String normalized = input
+                .replaceAll("[^a-zA-Z0-9]", "") // remove spaces & special chars
+                .toLowerCase(); // convert to lowercase
 
-        // Base Condition
-        if (right <= left) {
-            return true;
+        // Step 2: Check palindrome using two-pointer
+        int left = 0;
+        int right = normalized.length() - 1;
+
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
-
-        // Recursive Call
-        boolean isPal = isPalindrome(str, right - 1);
-
-        // Compare characters after recursion unfolds
-        if (!isPal) {
-            return false;
-        }
-
-        if (str.charAt(left) != str.charAt(right)) {
-            return false;
-        }
-
-        // Move left pointer forward
-        left++;
 
         return true;
     }
 
     public static void main(String[] args) {
-        String input = "madam"; // try "hello"
+        String input = "A man a plan a canal Panama";
 
-        boolean result = isPalindrome(input, input.length() - 1);
-
-        if (result) {
+        if (isPalindrome(input)) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");
