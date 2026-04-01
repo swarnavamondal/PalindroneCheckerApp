@@ -1,38 +1,90 @@
-/**
- * ======================================================
- * MAIN CLASS – UseCase2PalindromeCheckerApp
- * ======================================================
- *
- * Use Case 2: Hardcoded Palindrome Validation
- *
- * Description:
- * This class demonstrates basic palindrome validation
- * using a hardcoded string value.
- */
-import java.util.Scanner;
-public class PalindromeCheckerApp {
+class Node {
+    char data;
+    Node next;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 
-        // Hardcoded string
-        System.out.print("Enter text: ");
-        String input = scanner.nextLine();
+public class PalindromeLinkedList {
 
-        boolean isPalindrome = true;
+    // Function to check palindrome
+    public static boolean isPalindrome(Node head) {
+        if (head == null || head.next == null)
+            return true;
 
-        // Loop only till half of the string length
-        for (int i = 0; i < input.length() / 2; i++) {
+        // Step 1: Find middle using fast & slow pointers
+        Node slow = head;
+        Node fast = head;
 
-            // Compare characters from both ends
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Step 2: Reverse second half
+        Node secondHalf = reverse(slow);
+
+        // Step 3: Compare both halves
+        Node firstHalf = head;
+        Node temp = secondHalf;
+
+        while (temp != null) {
+            if (firstHalf.data != temp.data) {
+                return false;
+            }
+            firstHalf = firstHalf.next;
+            temp = temp.next;
+        }
+
+        return true;
+    }
+
+    // Function to reverse linked list
+    public static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Convert string to linked list
+    public static Node createList(String str) {
+        Node head = null, tail = null;
+
+        for (char ch : str.toCharArray()) {
+            Node newNode = new Node(ch);
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
             }
         }
 
-        // Display output in required format
-        System.out.println("Input text: " + input);
-        System.out.println("Is it a Palindrome? : " + isPalindrome);
+        return head;
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        String input = "madam"; // try "hello" also
+
+        Node head = createList(input);
+
+        if (isPalindrome(head)) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not a Palindrome");
+        }
     }
 }
