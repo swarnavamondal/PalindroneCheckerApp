@@ -1,87 +1,39 @@
-class Node {
-    char data;
-    Node next;
+public class RecursivePalindrome {
 
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
+    // Helper variable to track left side
+    static int left = 0;
 
-public class PalindromeLinkedList {
+    public static boolean isPalindrome(String str, int right) {
 
-    // Function to check palindrome
-    public static boolean isPalindrome(Node head) {
-        if (head == null || head.next == null)
+        // Base Condition
+        if (right <= left) {
             return true;
-
-        // Step 1: Find middle using fast & slow pointers
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
         }
 
-        // Step 2: Reverse second half
-        Node secondHalf = reverse(slow);
+        // Recursive Call
+        boolean isPal = isPalindrome(str, right - 1);
 
-        // Step 3: Compare both halves
-        Node firstHalf = head;
-        Node temp = secondHalf;
-
-        while (temp != null) {
-            if (firstHalf.data != temp.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            temp = temp.next;
+        // Compare characters after recursion unfolds
+        if (!isPal) {
+            return false;
         }
+
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+
+        // Move left pointer forward
+        left++;
 
         return true;
     }
 
-    // Function to reverse linked list
-    public static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-        Node next = null;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        return prev;
-    }
-
-    // Convert string to linked list
-    public static Node createList(String str) {
-        Node head = null, tail = null;
-
-        for (char ch : str.toCharArray()) {
-            Node newNode = new Node(ch);
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        return head;
-    }
-
-    // Main method
     public static void main(String[] args) {
-        String input = "madam"; // try "hello" also
+        String input = "madam"; // try "hello"
 
-        Node head = createList(input);
+        boolean result = isPalindrome(input, input.length() - 1);
 
-        if (isPalindrome(head)) {
+        if (result) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");
